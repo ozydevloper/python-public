@@ -35,13 +35,22 @@ class App:
                 self.data_action.append(row['idPermohonanProduk'])
         
         for idPermohonan in self.data_action:
-            with self.page.expect_request("https://rcrm.iconpln.co.id/icrm-be-backoffice-production/mitra/disposisi/lihat/v001") as popup_info:
+            with self.page.expect_request("https://rcrm.iconpln.co.id/icrm-be-backoffice-production/mitra/disposisi/lihat/v001") as response_info_2:
                 self.page.get_by_role('gridcell', name=idPermohonan, exact=True).click()
             
-            popup_page = popup_info.value
             
             self.page.get_by_role('textbox', name="Pilih Mitra", exact=True).click()
+            self.page.get_by_role('option', name='PT PLN ICON PLUS ').click()
+            self.page.get_by_role('textbox', name="Ketikan Nama Work Order", exact=True).fill(NAMA_WORKORDER)
 
+            self.page.get_by_role('button', name="Tanggal Mulai", exact=True).click()
+            self.page.get_by_role('cell', name='10', exact=True).click()
+
+            self.page.get_by_role('button', name="Tanggal Selesai", exact=True).click()
+            self.page.get_by_role('cell', name='30', exact=True).click()
+            
+            self.page.get_by_role('button', name="Tgl Estimasi Pick Up Material", exact=True).click()
+            self.page.get_by_role('cell', name='30', exact=True).click()
             self.page.wait_for_timeout(60000)
             
 
